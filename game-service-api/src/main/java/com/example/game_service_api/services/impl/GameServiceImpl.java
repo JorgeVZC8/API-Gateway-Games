@@ -4,6 +4,7 @@ import com.example.game_service_api.commons.entities.Game;
 import com.example.game_service_api.commons.exceptions.GameException;
 import com.example.game_service_api.repositories.GameRepository;
 import com.example.game_service_api.services.GameService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -40,11 +41,10 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void deleteGameById(Long id) {
-        try{
-            this.gameRepository.deleteById(id);
-        }catch(EmptyResultDataAccessException e){
-            throw new GameException("The does not exists", HttpStatus.NOT_FOUND);
+        if (!this.gameRepository.existsById(id)) {
+            throw new GameException("The game does not exist", HttpStatus.NOT_FOUND);
         }
+        this.gameRepository.deleteById(id);
     }
 
     @Override

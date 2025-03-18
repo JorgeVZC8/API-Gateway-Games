@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/games")
 public class GameController implements GameApi {
     private final GameService gameService;
 
@@ -19,34 +20,38 @@ public class GameController implements GameApi {
     }
 
     @Override
+    @PostMapping
     public ResponseEntity<Game> saveGame(@RequestBody Game game){
         var gameCreated = this.gameService.saveGame(game);
         return ResponseEntity.ok(gameCreated);
     }
 
     @Override
-    public ResponseEntity<Game> getGameById(String id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Game> getGameById(@PathVariable String id){
         return ResponseEntity.ok(this.gameService.getGameById(id));
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
         return ResponseEntity.ok(this.gameService.getAllGames());
     }
 
     @Override
-    public ResponseEntity<String> deleteGame(Long id) {
-        try{
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteGame(@PathVariable Long id) {
+        try {
             this.gameService.deleteGameById(id);
-            return ResponseEntity.ok("The game whose ID is: "+id+ " was deleted successfully");
-        }catch(GameException e){
+            return ResponseEntity.ok("The game whose ID is: " + id + " was deleted successfully");
+        } catch (GameException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
-
     }
 
     @Override
-    public ResponseEntity<Game> putGame(Long id, Game gameRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Game> putGame(@PathVariable Long id, @RequestBody Game gameRequest) {
         return ResponseEntity.ok(this.gameService.putGameById(id,gameRequest));
     }
 
