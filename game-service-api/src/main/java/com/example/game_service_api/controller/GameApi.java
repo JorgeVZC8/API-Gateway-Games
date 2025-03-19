@@ -10,7 +10,7 @@ import java.util.List;
 @RestController (ApiPathVariables.V1_ROUTE+ApiPathVariables.GAME_ROUTE)
 public interface GameApi {
     @PostMapping
-    ResponseEntity<Game> saveGame(@RequestBody Game game);
+    ResponseEntity<Game> saveGame(@RequestHeader String userId, @RequestBody Game game);
     @GetMapping("/{id}")
     ResponseEntity<Game> getGameById(String id);
     @GetMapping

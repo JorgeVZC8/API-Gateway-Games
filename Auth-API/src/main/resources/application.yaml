@@ -13,3 +13,6 @@ loggin:
     org:
       hibernate:
         SQL: DEBUG
+
+server:
+  port: 8081
