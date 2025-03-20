@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/games")
+@RequestMapping("/v1/games")
 public class GameController implements GameApi {
     private final GameService gameService;
 

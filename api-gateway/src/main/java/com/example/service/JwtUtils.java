@@ -6,12 +6,14 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class JwtUtils {
 
     private final String secretKey = "ghuisdtweruitywfkjsfbdgscnvbalsdkjfghfadlsjkfvbjbvsdfghjsdfhjghkasdfukasdsxcvhjkgawsducfshasfgkdk";
 
+    //Este metodo comprueba que el token es válido, es decir, valída la firma del token, decodifica las claims y devulve un objeto Jws<Claims>
     public Claims getClaims(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
@@ -20,6 +22,7 @@ public class JwtUtils {
                 .getBody();
     }
 
+    //Este metodo comprueba si el token ha expirado
     public boolean isExpired(String token){
         try{
             return getClaims(token).getExpiration().before(new Date());
@@ -28,11 +31,12 @@ public class JwtUtils {
         }
     }
 
-    public Integer extractUserId(String token){
+    //Este metodo extrae el userId del token
+    public Optional<Integer> extractUserId(String token){
         try{
-            return Integer.parseInt(getClaims(token).getSubject());
+            return Optional.of(Integer.parseInt(getClaims(token).getSubject()));
         }catch (Exception e){
-            return  null;
+            return  Optional.empty();
         }
     }
 }

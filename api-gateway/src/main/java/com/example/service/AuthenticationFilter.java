@@ -20,17 +20,25 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         this.routerValidator= routerValidator;
         this.jwtUtils = jwtUtils;
     }
+
+    /*Este método recibe la petición y verifica si es válida. En dicho caso la modifica, añadiendo el id del usuario que la realizó a la cabecera de la petición
+    y se la pasa al próximo filtro o servicio backend */
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
             var request = exchange.getRequest();
             ServerHttpRequest serverHttpRequest = null;
+
+            //Comprobamos si el endpoint requiere atenticacion
             if(routerValidator.isSecured.test(request)){
+                //Comprobamos que la peticion contiene un token
                 if(authMissing(request)){
                     return onError(exchange, HttpStatus.UNAUTHORIZED);
                 }
 
+                //Extraemos el token
                 String authHeader = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
+                //Comprobamos que sea valido y no haya expirado
                 if (authHeader != null && authHeader.startsWith("Bearer ")){
                    authHeader = authHeader.substring(7);
                 } else {
@@ -40,6 +48,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     return onError(exchange, HttpStatus.UNAUTHORIZED);
                 }
 
+                //Añadimos el ID del usuario que ha realizado la petición a la cabecera de dicha petición.
                 serverHttpRequest = exchange.getRequest()
                         .mutate()
                         .header("userIdRequest", jwtUtils.extractUserId(authHeader).toString())
@@ -50,12 +59,14 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         });
     }
 
+    //Modifica el estatus de una petición
     private Mono<Void> onError(ServerWebExchange exchange, HttpStatus httpStatus){
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
         return null;
     }
 
+    //Comprueba si la cabecera de la petición tiene la etiqueta authorization
     private boolean authMissing(ServerHttpRequest request){
         return !request.getHeaders().containsKey("Authorization");
     }
