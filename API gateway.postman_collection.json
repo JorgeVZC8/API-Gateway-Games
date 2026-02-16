@@ -1,0 +1,248 @@
+{
+  "info": {
+    "_postman_id": "9ff63fc5-9ea4-41ea-a321-6efce599724c",
+    "name": "API gateway",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34237408"
+  },
+  "item": [
+    {
+      "name": "Registro de usuario",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"test@test.com\",\r\n  \"password\": \"1234\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8082/v1/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener id usuario",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNzcxMjQxMjM4LCJleHAiOjkyMjMzNzIwMzY4NTQ3NzV9.FkuWD8o6vsHazw-85_OFthPYrtd2UO541rrsvmEoU1FE1FOXEet9nZvY1AuQmN2Vo19t5xb0OvtDirr37cbyRg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/v1/auth",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Guardar videojuego",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNzcxMjQxNDE2LCJleHAiOjkyMjMzNzIwMzY4NTQ3NzV9.C3g-TqFNBWioXOxGkqjGJsglmiVbetfmLLDM6U9jB-r-UXL_53gke1Q9LTC6Q19Ah25Sdok0OzUpy58-aioWVQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 118,\r\n  \"name\": \"The Witcher 3\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8082/v1/games",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "games"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar todos los videojuegos",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNzcxMjQxNDE2LCJleHAiOjkyMjMzNzIwMzY4NTQ3NzV9.C3g-TqFNBWioXOxGkqjGJsglmiVbetfmLLDM6U9jB-r-UXL_53gke1Q9LTC6Q19Ah25Sdok0OzUpy58-aioWVQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/v1/games",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "games"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obtener datos de un juego",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNzcxMjQxNDE2LCJleHAiOjkyMjMzNzIwMzY4NTQ3NzV9.C3g-TqFNBWioXOxGkqjGJsglmiVbetfmLLDM6U9jB-r-UXL_53gke1Q9LTC6Q19Ah25Sdok0OzUpy58-aioWVQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/v1/games/252",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "games",
+            "252"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar videojuego",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNzcxMjQxNDE2LCJleHAiOjkyMjMzNzIwMzY4NTQ3NzV9.C3g-TqFNBWioXOxGkqjGJsglmiVbetfmLLDM6U9jB-r-UXL_53gke1Q9LTC6Q19Ah25Sdok0OzUpy58-aioWVQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"The Witcher 3: Updated\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8082/v1/games/252",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "games",
+            "252"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Borrar juego",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNzcxMjQxNDE2LCJleHAiOjkyMjMzNzIwMzY4NTQ3NzV9.C3g-TqFNBWioXOxGkqjGJsglmiVbetfmLLDM6U9jB-r-UXL_53gke1Q9LTC6Q19Ah25Sdok0OzUpy58-aioWVQ",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"The Witcher 3: Updated\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/v1/games/252",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "v1",
+            "games",
+            "252"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
