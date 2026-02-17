@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Gateway Games Frontend</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  </head>
+  <body>
+    <div id="app" class="layout">
+      <header>
+        <h1>🎮 API Gateway Games</h1>
+        <p>Gestión de videojuegos (ID + nombre) vía API Gateway con seguridad JWT.</p>
+      </header>
+
+      <main>
+        <section class="card">
+          <h2>Autenticación (obligatoria)</h2>
+          <p class="help">Primero regístrate para obtener token en <code>{{ gatewayBase }}/v1/auth/register</code>. Sin token, los endpoints de <code>/v1/games</code> deben fallar.</p>
+          <form @submit.prevent="registerAndStoreToken">
+            <label>
+              Email
+              <input v-model="credentials.email" type="email" placeholder="user@example.com" required />
+            </label>
+            <label>
+              Password
+              <input v-model="credentials.password" type="password" minlength="6" required />
+            </label>
+            <div class="actions-row">
+              <button :disabled="loading.auth">{{ loading.auth ? 'Obteniendo token...' : 'Registrar / Obtener token' }}</button>
+              <button type="button" class="secondary" @click="clearSession">Cerrar sesión local</button>
+            </div>
+          </form>
+          <p class="help" v-if="isAuthenticated">✅ Token activo, ya puedes consumir games.</p>
+          <p class="help" v-else>⛔ Debes registrarte primero para habilitar consultas de games.</p>
+        </section>
+
+        <template v-if="isAuthenticated">
+          <section class="card">
+            <div class="section-title">
+              <h2>Videojuegos disponibles</h2>
+              <button @click="fetchGames" :disabled="loading.games">{{ loading.games ? 'Cargando...' : 'Refrescar' }}</button>
+            </div>
+            <p class="help">API base: <code>{{ gatewayBase }}/v1/games</code></p>
+
+            <p v-if="games.length === 0" class="help">No hay videojuegos cargados.</p>
+            <ul v-else class="games-list">
+              <li v-for="game in games" :key="game.id" class="game-item">
+                <div class="game-chip">ID {{ game.id }}</div>
+                <div class="game-content">
+                  <strong>{{ game.name }}</strong>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <section class="card actions-menu">
+            <h2>Acciones</h2>
+            <div class="actions-row">
+              <button @click="setView('save')">Guardar</button>
+              <button class="secondary" @click="setView('search')">Buscar</button>
+              <button class="secondary" @click="setView('edit')">Editar</button>
+              <button class="danger" @click="setView('delete')">Eliminar</button>
+            </div>
+          </section>
+
+          <section class="card" v-if="activeView === 'save'">
+            <h2>Guardar videojuego</h2>
+            <form @submit.prevent="createGame">
+              <label>
+                ID del videojuego
+                <input v-model.number="formGame.id" type="number" min="1" required />
+              </label>
+              <label>
+                Nombre
+                <input v-model="formGame.name" required />
+              </label>
+              <button :disabled="loading.create">{{ loading.create ? 'Guardando...' : 'Guardar' }}</button>
+            </form>
+          </section>
+
+          <section class="card" v-if="activeView === 'search'">
+            <h2>Buscar videojuego</h2>
+            <form @submit.prevent="searchGame">
+              <label>
+                ID del videojuego
+                <input v-model.number="searchId" type="number" min="1" required />
+              </label>
+              <button :disabled="loading.search">{{ loading.search ? 'Buscando...' : 'Buscar' }}</button>
+            </form>
+
+            <div v-if="foundGame" class="search-result">
+              <h3>Resultado</h3>
+              <div class="result-grid">
+                <span class="result-label">ID</span>
+                <span class="result-value">{{ foundGame.id }}</span>
+                <span class="result-label">Nombre</span>
+                <span class="result-value">{{ foundGame.name }}</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" v-if="activeView === 'edit'">
+            <h2>Editar videojuego</h2>
+            <form @submit.prevent="loadGameToEdit">
+              <label>
+                ID del videojuego a editar
+                <input v-model.number="editId" type="number" min="1" required />
+              </label>
+              <button type="submit" class="secondary" :disabled="loading.editLoad">
+                {{ loading.editLoad ? 'Cargando...' : 'Cargar datos' }}
+              </button>
+            </form>
+
+            <form v-if="editGame" @submit.prevent="updateGame" class="mt-1">
+              <label>
+                Nombre
+                <input v-model="editGame.name" required />
+              </label>
+              <button :disabled="loading.update">{{ loading.update ? 'Actualizando...' : 'Guardar cambios' }}</button>
+            </form>
+          </section>
+
+          <section class="card" v-if="activeView === 'delete'">
+            <h2>Eliminar videojuego</h2>
+            <form @submit.prevent="deleteGame">
+              <label>
+                ID del videojuego
+                <input v-model.number="deleteId" type="number" min="1" required />
+              </label>
+              <button class="danger" :disabled="loading.delete">{{ loading.delete ? 'Eliminando...' : 'Eliminar' }}</button>
+            </form>
+          </section>
+        </template>
+      </main>
+
+      <footer>
+        <p class="status" :class="status.type" v-if="status.message">{{ status.message }}</p>
+      </footer>
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>

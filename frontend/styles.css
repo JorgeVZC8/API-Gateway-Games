@@ -1,0 +1,176 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #e6edf3;
+  background-color: #0d1117;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1f2937, #0d1117 50%);
+}
+
+.layout {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
+.card {
+  background: rgba(17, 24, 39, 0.92);
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+form,
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+form {
+  gap: 0.8rem;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid #3b4654;
+  padding: 0.6rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+input {
+  background: #0d1117;
+  color: #e6edf3;
+}
+
+button {
+  cursor: pointer;
+  background: #238636;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+}
+
+button.secondary {
+  background: #374151;
+}
+
+button.danger {
+  background: #da3633;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.actions-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.games-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.game-item {
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  background: rgba(9, 20, 38, 0.75);
+}
+
+.game-chip {
+  min-width: 72px;
+  text-align: center;
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #9ecbff;
+  background: rgba(30, 111, 207, 0.25);
+  border: 1px solid rgba(30, 111, 207, 0.6);
+}
+
+.game-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.actions-menu {
+  position: sticky;
+  top: 0.5rem;
+}
+
+.search-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(30, 111, 207, 0.55);
+  background: rgba(30, 111, 207, 0.12);
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0.45rem 1rem;
+}
+
+.result-label {
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.result-value {
+  color: #e6edf3;
+  font-weight: 700;
+}
+
+.help {
+  color: #9ca3af;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.status {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.status.ok {
+  background: rgba(35, 134, 54, 0.25);
+}
+
+.status.error {
+  background: rgba(218, 54, 51, 0.3);
+}

@@ -1,8 +1,25 @@
 jwt:
   secret: ghuisdtweruitywfkjsfbdgscnvbalsdkjfghfadlsjkfvbjbvsdfghjsdfhjghkasdfukasdsxcvhjkgawsducfshasfgkdk
+
 spring:
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: "http://localhost:5173"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders: "*"
+            allowCredentials: false
+
       routes:
         - id: auth-route
           uri: http://localhost:8081
@@ -14,6 +31,7 @@ spring:
             - Path=/v1/games/**
           filters:
             - AuthenticationFilter
+
   endpoints:
     web:
       exposure:
@@ -23,5 +41,6 @@ spring:
       show-details: always
     gateway:
       enabled: true
+
 server:
   port: 8082
